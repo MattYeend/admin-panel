@@ -19,7 +19,13 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->integer('role')->default(1);
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreignId('restored_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->timestamp('restored_at')->nullable()->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
