@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -45,4 +46,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Contstants for role IDs against role names
+     * Can be used as Role::SUPER_ADMIN, or Role::ADMIN
+     */
+    public const SUPER_ADMIN = 1;
+    public const ADMIN = 2;
+    public const USER = 3; 
 }
