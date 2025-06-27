@@ -14,6 +14,14 @@ class User extends Authenticatable
     use HasFactory, Notifiable, SoftDeletes;
 
     /**
+     * Contstants for role IDs against role names
+     * Can be used as Role::SUPER_ADMIN, or Role::ADMIN
+     */
+    public const SUPER_ADMIN = 1;
+    public const ADMIN = 2;
+    public const USER = 3;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -57,12 +65,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    /**
-     * Contstants for role IDs against role names
-     * Can be used as Role::SUPER_ADMIN, or Role::ADMIN
-     */
-    public const SUPER_ADMIN = 1;
-    public const ADMIN = 2;
-    public const USER = 3; 
 }
