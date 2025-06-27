@@ -42,6 +42,9 @@ class PasswordResetLinkController extends Controller
             'user_agent' => $request->userAgent(),
         ], $request->user()?->id ?? null);
 
-        return back()->with('status', __('A reset link will be sent if the account exists.'));
+        return back()->with(
+            'status',
+            __('A reset link will be sent if the account exists.')
+        );
     }
 }
