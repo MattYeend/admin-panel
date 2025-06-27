@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Log;
+use App\Models\Logs;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -63,7 +63,7 @@ class NewPasswordController extends Controller
             return to_route('login')->with('status', __($status));
         }
 
-        Log::log(Log::ACTION_NEW_PASSWORD, [
+        Logs::log(Logs::ACTION_NEW_PASSWORD, [
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ], $request->user()?->id ?? null);

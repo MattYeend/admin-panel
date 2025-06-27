@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Log;
+use App\Models\Logs;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
             'role' => $request->role,
         ]);
 
-        Log::log(Log::ACTION_REGISTER_USER, [
+        Logs::log(Logs::ACTION_REGISTER_USER, [
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ], $request->user()?->id ?? null);

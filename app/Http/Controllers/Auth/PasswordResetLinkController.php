@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Log;
+use App\Models\Logs;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -37,7 +37,7 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-        Log::log(Log::ACTION_RESET_PASSWORD, [
+        Logs::log(Logs::ACTION_RESET_PASSWORD, [
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ], $request->user()?->id ?? null);

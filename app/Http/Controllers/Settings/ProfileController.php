@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\Log;
+use App\Models\Logs;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +38,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        Log::log(Log::ACTION_PROFILE_UPDATED, [
+        Logs::log(Logs::ACTION_PROFILE_UPDATED, [
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'user' => $request->user(),
@@ -62,7 +62,7 @@ class ProfileController extends Controller
 
         $user->delete();
 
-        Log::log(Log::ACTION_PROFILE_DELETED, [
+        Logs::log(Logs::ACTION_PROFILE_DELETED, [
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'user' => $user,

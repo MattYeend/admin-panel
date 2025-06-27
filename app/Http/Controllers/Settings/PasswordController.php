@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\Log;
+use App\Models\Logs;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +35,7 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        Log::log(Log::ACTION_PASSWORD_CHANGED, [
+        Logs::log(Logs::ACTION_PASSWORD_CHANGED, [
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ], $request->user()?->id ?? null);

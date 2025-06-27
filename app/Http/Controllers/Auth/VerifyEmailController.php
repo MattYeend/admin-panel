@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Log;
+use App\Models\Logs;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
@@ -25,7 +25,7 @@ class VerifyEmailController extends Controller
             event(new Verified($user));
         }
 
-        Log::log(Log::ACTION_VERIFY_USER, [
+        Logs::log(Logs::ACTION_VERIFY_USER, [
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ], $request->user()?->id ?? null);
