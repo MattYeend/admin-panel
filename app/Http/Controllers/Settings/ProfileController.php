@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Log;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -37,6 +38,12 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        Log::log(Log::ACTION_PROFILE_UPDATED, [
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'user' => $request->user(),
+        ], $request->user()?->id ?? null);
+
         return to_route('profile.edit');
     }
 
@@ -54,6 +61,12 @@ class ProfileController extends Controller
         Auth::logout();
 
         $user->delete();
+
+        Log::log(Log::ACTION_PROFILE_DELETED, [
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'user' => $user,
+        ], $request->user()?->id ?? null);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

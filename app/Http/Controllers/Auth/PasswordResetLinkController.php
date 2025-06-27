@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Log;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -35,6 +36,11 @@ class PasswordResetLinkController extends Controller
         Password::sendResetLink(
             $request->only('email')
         );
+
+        Log::log(Log::ACTION_RESET_PASSWORD, [
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ], $request->user()?->id ?? null);
 
         return back()->with('status', __('A reset link will be sent if the account exists.'));
     }
