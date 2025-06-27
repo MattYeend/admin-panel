@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -32,32 +33,82 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'title' => 'nullable|string|max:255',
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => 'required|integer|in:1,2,3',
-        ]);
+        $validated = $this->validateUser($request);
+        $user = $this->createUser($validated);
 
-        $user = User::create([
-            'title' => $request->title,
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-        ]);
+        event(new Registered($user));
+        Auth::login($user);
 
         Logs::log(Logs::ACTION_REGISTER_USER, [
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
-        ], $request->user()?->id ?? null);
-
-        event(new Registered($user));
-
-        Auth::login($user);
+        ], $user->id);
 
         return to_route('dashboard');
+    }
+
+    private function userBasicInfo(): array
+    {
+        return [
+            'title' => 'nullable|string|max:20',
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email'),
+            ],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('users', 'slug'),
+            ],
+        ];
+    }
+
+    private function userValidationRules(): array
+    {
+        return array_merge(
+            $this->userBasicInfo(),
+        );
+    }
+
+    private function validateUser(Request $request): array
+    {
+        return $request->validate($this->userValidationRules());
+    }
+
+    private function createUser(array $data): User
+    {
+        $slug = $data['slug'] ?? ($data['name'] ?? null);
+        $slug = $slug ? Str::slug($slug) : uniqid('user-', true);
+
+        return User::create(array_merge(
+            $this->extractBasicUserFields($data, $slug),
+            $this->extractAuditFields()
+        ));
+    }
+
+    private function extractBasicUserFields(array $data, string $slug): array
+    {
+        return [
+            'title' => $data['title'] ?? null,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'slug' => $slug,
+        ];
+    }
+
+    private function extractAuditFields(): array
+    {
+        $userId = auth()->id();
+        return [
+            'created_by' => $userId,
+            'updated_by' => $userId,
+        ];
     }
 }
