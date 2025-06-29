@@ -65,4 +65,71 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the unique identifier for the user.
+     * This method is used by route model binding to
+     * retrieve the user by their slug.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
+     * Check to see if the user is a super admin.
+     * This method checks if the user's role ID matches the super admin role ID.
+     *
+     * @return bool
+     *
+     * @see User for the list of roles and their IDs
+     * @see User::SUPER_ADMIN for the super admin role ID
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role_id === User::SUPER_ADMIN;
+    }
+
+    /**
+     * Check to see if the user is an admin.
+     * This method checks if the user's role ID matches the admin role ID.
+     *
+     * @return bool
+     *
+     * @see User for the list of roles and their IDs
+     * @see User::ADMIN for the admin role ID
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role_id === User::ADMIN;
+    }
+
+    /**
+     * Check to see if the user is a user.
+     * This method checks if the user's role ID matches the user role ID.
+     *
+     * @return bool
+     *
+     * @see User for the list of roles and their IDs
+     * @see User::USER for the user role ID
+     */
+    public function isUser(): bool
+    {
+        return $this->role_id === User::USER;
+    }
+
+    /**
+     * Check to see if the user is Admin or higher.
+     *
+     * @return bool
+     *
+     * @see Role for the list of roles and their IDs
+     * @see User::isSuperAdmin and User::isAdmin
+     */
+    public function isAtleastAdmin(): bool
+    {
+        return $this->isSuperAdmin() || $this->isAdmin();
+    }
 }
