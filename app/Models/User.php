@@ -54,19 +54,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-
-    /**
      * Get the unique identifier for the user.
      * This method is used by route model binding to
      * retrieve the user by their slug.
@@ -131,5 +118,18 @@ class User extends Authenticatable
     public function isAtleastAdmin(): bool
     {
         return $this->isSuperAdmin() || $this->isAdmin();
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }

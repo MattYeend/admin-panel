@@ -4,9 +4,10 @@ namespace App\Services;
 
 use App\Models\Logs;
 use App\Models\User;
+
 class UserLogger
 {
-     /**
+    /**
      * Create a new class instance.
      */
     public function __construct()

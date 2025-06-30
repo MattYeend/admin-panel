@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Models\User;
-use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     // return Inertia::render('Welcome');

@@ -28,7 +28,7 @@ class UserController extends Controller
         $this->logger = $logger;
     }
 
-        /**
+    /**
      * Display a listing of users.
      *
      * @return \Inertia\Response
@@ -61,6 +61,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        unset($request);
         // Empty for now
     }
 
@@ -91,6 +92,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        unset($id);
         // Empty for now
     }
 
@@ -99,6 +101,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        unset($request, $id);
         // Empty for now
     }
 
@@ -107,6 +110,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        unset($id);
         // Empty for now
     }
 
