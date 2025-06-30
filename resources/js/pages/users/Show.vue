@@ -1,19 +1,23 @@
 <script setup lang="ts">
-import { 
-	Head, 
-	Link 
-} from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { type BreadcrumbItem } from '@/types'
 import { computed } from 'vue'
 import { usePage } from '@inertiajs/vue3'
+
+// Map role IDs to role names
+const roleNames: Record<number, string> = {
+	1: 'Super Admin',
+	2: 'Admin',
+	3: 'User',
+}
 
 const props = defineProps<{
 	user: {
 		id: number
 		name: string
 		email: string
-		role: { name: string } | null
+		role: number | null
 		slug: string
 	}, 
 	from: 'index' | 'archived'
@@ -25,9 +29,16 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ title: 'Details', href: '#' },
 ]
 
-const page = usePage()
-const pageFrom = computed(() => page.props.from ?? 'index')
+import type { PageProps } from '@inertiajs/core'
 
+interface CustomPageProps extends PageProps {
+	props: {
+		from?: 'index' | 'archived'
+	}
+}
+
+const page = usePage<CustomPageProps>()
+const pageFrom = computed(() => page.props.from ?? 'index')
 </script>
 
 <template>
@@ -40,22 +51,16 @@ const pageFrom = computed(() => page.props.from ?? 'index')
 			<div class="bg-white dark:bg-gray-800 rounded-xl shadow p-6 space-y-2">
 				<p><strong>Name:</strong> {{ user.name }}</p>
 				<p><strong>Email:</strong> {{ user.email }}</p>
-				<p><strong>Role:</strong> {{ user.role ?? '—' }}</p>
+				<p><strong>Role:</strong> {{ roleNames[user.role ?? 0] ?? '—' }}</p>
 			</div>
 
 			<div class="flex space-x-4">
 				<Link 
-					:href="route('users.edit', user.slug)" 
-					class="text-sm btn btn-primary"
-				>
-					Edit
-				</Link>
-				<Link 
-					:href="(props.from ?? pageFrom) === 'archived' ? route('users.archived') : route('users.index')" 
-					class="text-sm text-muted-foreground"
-				>
-					Back
-				</Link>
+                    :href="(props.from ?? pageFrom) === 'archived' ? route('users.archived') : route('users.index')" 
+                    class="text-sm text-muted-foreground"
+                >
+                    Back
+                </Link>
 			</div>
 		</div>
 	</AppLayout>

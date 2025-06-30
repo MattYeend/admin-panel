@@ -42,11 +42,8 @@ class UserController extends Controller
         $archivedCount = User::onlyTrashed()->count();
 
         return Inertia::render('users/Index', [
-            'users' => User::get()->paginate(10),
-            'authUser' => User::where(
-                'id',
-                auth()->id()
-            )->with('role:id,name')->first(),
+            'users' => User::paginate(10),
+            'authUser' => auth()->user(),
             'hasArchivedUsers' => $archivedCount > 0,
         ]);
     }
@@ -150,12 +147,9 @@ class UserController extends Controller
     {
         $this->authorize('viewArchived', User::class);
         $archivedUsers = User::onlyTrashed()
-            ->get()
             ->paginate(10);
 
-        $authUser = User::where('id', auth()->id())
-            ->with('role:id,name')
-            ->first();
+        $authUser = auth()->user();
 
         $this->logger->archived(auth()->id());
 
