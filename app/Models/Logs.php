@@ -18,60 +18,61 @@ class Logs extends Model
     public const ACTION_VIEW_USERS = 6;
     public const ACTION_SHOW_USER = 7;
     public const ACTION_REINSTATE_USER = 8;
-    public const ACTION_WELCOME_EMAIL_SENT = 9;
-    public const ACTION_CONFIRM_PASSWORD = 10;
-    public const ACTION_FORGOT_PASSWORD = 11;
-    public const ACTION_NEW_PASSWORD = 12;
-    public const ACTION_REGISTER_USER = 13;
+    public const ACTION_VIEW_ARCHIVED_USERS = 9;
+    public const ACTION_WELCOME_EMAIL_SENT = 10;
+    public const ACTION_CONFIRM_PASSWORD = 11;
+    public const ACTION_FORGOT_PASSWORD = 12;
+    public const ACTION_NEW_PASSWORD = 13;
+    public const ACTION_REGISTER_USER = 14;
 
     // Login logs
-    public const ACTION_LOGIN_FAILED = 14;
-    public const ACTION_LOGIN_PASSWORD_FAILED = 15;
-    public const ACTION_LOGIN_EMAIL_FAILED = 16;
-    public const ACTION_LOGIN_USERNAME_FAILED = 17;
-    public const ACTION_LOGIN_SUCCESS = 18;
+    public const ACTION_LOGIN_FAILED = 15;
+    public const ACTION_LOGIN_PASSWORD_FAILED = 16;
+    public const ACTION_LOGIN_EMAIL_FAILED = 17;
+    public const ACTION_LOGIN_USERNAME_FAILED = 18;
+    public const ACTION_LOGIN_SUCCESS = 19;
 
     // Reset logs
-    public const ACTION_RESET_PASSWORD = 19;
-    public const ACTION_RESET_EMAIL = 20;
-    public const ACTION_RESET_USERNAME = 21;
+    public const ACTION_RESET_PASSWORD = 20;
+    public const ACTION_RESET_EMAIL = 21;
+    public const ACTION_RESET_USERNAME = 22;
 
     // Verify user
-    public const ACTION_VERIFY_USER = 22;
+    public const ACTION_VERIFY_USER = 23;
 
     // Password change
-    public const ACTION_PASSWORD_CHANGED = 23;
+    public const ACTION_PASSWORD_CHANGED = 24;
 
     // MFA (multi-factor authentication)
-    public const ACTION_MFA_ENABLED = 24;
-    public const ACTION_MFA_DISABLED = 25;
+    public const ACTION_MFA_ENABLED = 25;
+    public const ACTION_MFA_DISABLED = 26;
 
     // Profile logs
-    public const ACTION_PROFILE_UPDATED = 26;
-    public const ACTION_PROFILE_DELETED = 27;
+    public const ACTION_PROFILE_UPDATED = 27;
+    public const ACTION_PROFILE_DELETED = 28;
 
     // Update email
-    public const ACTION_EMAIL_UPDATED = 28;
+    public const ACTION_EMAIL_UPDATED = 29;
 
     // Assign role
-    public const ACTION_ROLE_ASSIGNED = 29;
+    public const ACTION_ROLE_ASSIGNED = 30;
 
     // Permission logs
-    public const ACTION_PERMISSION_GRANTED = 30;
-    public const ACTION_PERMISSION_REVOKED = 31;
+    public const ACTION_PERMISSION_GRANTED = 31;
+    public const ACTION_PERMISSION_REVOKED = 32;
 
     // Error logs
-    public const ACTION_GENERAL_ERROR = 32;
-    public const ACTION_FOUR_HUNDRED_ERROR = 33;
-    public const ACTION_FOUR_ZERO_THREE_ERROR = 34;
-    public const ACTION_FOUR_ZERO_FOUR_ERROR = 35;
-    public const ACTION_FOUR_ONE_NINE_ERROR = 36;
-    public const ACTION_FOUR_TWO_NINE_ERROR = 37;
-    public const ACTION_FIVE_HUNDRED_ERROR = 38;
-    public const ACTION_FIVE_ZERO_THREE_ERROR = 39;
+    public const ACTION_GENERAL_ERROR = 33;
+    public const ACTION_FOUR_HUNDRED_ERROR = 34;
+    public const ACTION_FOUR_ZERO_THREE_ERROR = 35;
+    public const ACTION_FOUR_ZERO_FOUR_ERROR = 36;
+    public const ACTION_FOUR_ONE_NINE_ERROR = 37;
+    public const ACTION_FOUR_TWO_NINE_ERROR = 38;
+    public const ACTION_FIVE_HUNDRED_ERROR = 39;
+    public const ACTION_FIVE_ZERO_THREE_ERROR = 40;
 
     // Clear cache
-    public const ACTION_CLEAR_CACHE = 40;
+    public const ACTION_CLEAR_CACHE = 41;
 
     protected $table = 'logs';
 
